@@ -14,9 +14,17 @@
 //    limitations under the License.
 // </copyright>
 
+#if UNITY_ANDROID
+
 namespace GooglePlayGames
 {
+    using System;
+    using System.Collections;
+    using GooglePlayGames.OurUtils;
     using UnityEngine;
+#if UNITY_2017_2_OR_NEWER
+    using UnityEngine.Networking;
+#endif
     using UnityEngine.SocialPlatforms;
 
     /// <summary>
@@ -26,11 +34,12 @@ namespace GooglePlayGames
     /// </summary>
     public class PlayGamesUserProfile : IUserProfile
     {
-        private  string mDisplayName;
-        private  string mPlayerId;
-        private  string mAvatarUrl;
+        private string mDisplayName;
+        private string mPlayerId;
+        private string mAvatarUrl;
+        private bool mIsFriend;
 
-        private WWW wwwImage;
+        private volatile bool mImageLoading = false;
         private Texture2D mImage;
 
         internal PlayGamesUserProfile(string displayName, string playerId,
@@ -38,7 +47,19 @@ namespace GooglePlayGames
         {
             mDisplayName = displayName;
             mPlayerId = playerId;
+            setAvatarUrl(avatarUrl);
+            mImageLoading = false;
+            mIsFriend = false;
+        }
+
+        internal PlayGamesUserProfile(string displayName, string playerId, string avatarUrl,
+            bool isFriend)
+        {
+            mDisplayName = displayName;
+            mPlayerId = playerId;
             mAvatarUrl = avatarUrl;
+            mImageLoading = false;
+            mIsFriend = isFriend;
         }
 
         protected void ResetIdentity(string displayName, string playerId,
@@ -46,48 +67,55 @@ namespace GooglePlayGames
         {
             mDisplayName = displayName;
             mPlayerId = playerId;
-            mAvatarUrl = avatarUrl;
+            mIsFriend = false;
+            if (mAvatarUrl != avatarUrl)
+            {
+                mImage = null;
+                setAvatarUrl(avatarUrl);
+            }
+
+            mImageLoading = false;
         }
 
         #region IUserProfile implementation
 
         public string userName
         {
-            get
-            {
-                return mDisplayName;
-            }
+            get { return mDisplayName; }
         }
 
         public string id
         {
-            get
-            {
-                return mPlayerId;
-            }
+            get { return mPlayerId; }
+        }
+
+        public string gameId
+        {
+            get { return mPlayerId; }
         }
 
         public bool isFriend
         {
-            get
-            {
-                return true;
-            }
+            get { return mIsFriend; }
         }
 
         public UserState state
         {
-            get
-            {
-                return UserState.Online;
-            }
+            get { return UserState.Online; }
         }
 
         public Texture2D image
         {
             get
             {
-                return LoadImage();
+                if (!mImageLoading && mImage == null && !string.IsNullOrEmpty(AvatarURL))
+                {
+                    OurUtils.Logger.d("Starting to load image: " + AvatarURL);
+                    mImageLoading = true;
+                    PlayGamesHelperObject.RunCoroutine(LoadImage());
+                }
+
+                return mImage;
             }
         }
 
@@ -95,10 +123,7 @@ namespace GooglePlayGames
 
         public string AvatarURL
         {
-            get
-            {
-                return mAvatarUrl;
-            }
+            get { return mAvatarUrl; }
         }
 
         /// <summary>
@@ -107,32 +132,47 @@ namespace GooglePlayGames
         /// the image is returned once it is loaded.  null is returned
         /// up to that point.
         /// </summary>
-        private Texture2D LoadImage()
+        internal IEnumerator LoadImage()
         {
             // the url can be null if the user does not have an
             // avatar configured.
             if (!string.IsNullOrEmpty(AvatarURL))
             {
-                if (wwwImage == null || wwwImage.url != AvatarURL)
+#if UNITY_2017_2_OR_NEWER
+                UnityWebRequest www = UnityWebRequestTexture.GetTexture(AvatarURL);
+                www.SendWebRequest();
+#else
+                WWW www = new WWW(AvatarURL);
+#endif
+                while (!www.isDone)
                 {
-                    wwwImage = new WWW(AvatarURL);
-                    mImage = null;
+                    yield return null;
                 }
 
-                if (mImage != null) {
-                    return mImage;
+                if (www.error == null)
+                {
+#if UNITY_2017_2_OR_NEWER
+                    this.mImage = DownloadHandlerTexture.GetContent(www);
+#else
+                    this.mImage = www.texture;
+#endif
+                }
+                else
+                {
+                    mImage = Texture2D.blackTexture;
+                    OurUtils.Logger.e("Error downloading image: " + www.error);
                 }
 
-                if (wwwImage.isDone)
-                {
-                    mImage =  wwwImage.texture;
-                    return mImage;
-                }
+                mImageLoading = false;
             }
-
-            // if there is no url, always return null.
-            return null;
+            else
+            {
+                OurUtils.Logger.e("No URL found.");
+                mImage = Texture2D.blackTexture;
+                mImageLoading = false;
+            }
         }
+
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -145,12 +185,13 @@ namespace GooglePlayGames
                 return true;
             }
 
-            if (!typeof(object).IsSubclassOf(typeof(PlayGamesUserProfile)))
+            PlayGamesUserProfile other = obj as PlayGamesUserProfile;
+            if (other == null)
             {
                 return false;
             }
 
-            return mPlayerId.Equals(((PlayGamesUserProfile)obj).mPlayerId);
+            return StringComparer.Ordinal.Equals(mPlayerId, other.mPlayerId);
         }
 
         public override int GetHashCode()
@@ -162,5 +203,15 @@ namespace GooglePlayGames
         {
             return string.Format("[Player: '{0}' (id {1})]", mDisplayName, mPlayerId);
         }
+
+        private void setAvatarUrl(string avatarUrl)
+        {
+            mAvatarUrl = avatarUrl;
+            if (!avatarUrl.StartsWith("https") && avatarUrl.StartsWith("http"))
+            {
+                mAvatarUrl = avatarUrl.Insert(4, "s");
+            }
+        }
     }
 }
+#endif

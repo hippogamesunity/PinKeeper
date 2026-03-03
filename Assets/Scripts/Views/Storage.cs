@@ -109,8 +109,11 @@ namespace Assets.Scripts.Views
 
         public void InitializePremium(bool premium)
         {
-            PremiumButton.SetActive(!premium);
-            SyncButton.SetActive(premium);
+            PremiumButton.SetActive(false);
+            SyncButton.SetActive(false);
+
+            //PremiumButton.SetActive(!premium);
+            //SyncButton.SetActive(premium);
 
             #if UNITY_IPHONE
             

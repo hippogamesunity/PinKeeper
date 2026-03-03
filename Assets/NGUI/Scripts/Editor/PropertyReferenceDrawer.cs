@@ -1,7 +1,7 @@
-//----------------------------------------------
+//-------------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2014 Tasharen Entertainment
-//----------------------------------------------
+// Copyright © 2011-2017 Tasharen Entertainment Inc
+//-------------------------------------------------
 
 using UnityEngine;
 using UnityEditor;
@@ -139,6 +139,7 @@ public class PropertyReferenceDrawer
 			if (index == 0 && string.Equals(del, choice))
 				index = i;
 		}
+		//Array.Sort(names);
 		return names;
 	}
 

@@ -14,140 +14,48 @@
 //    limitations under the License.
 // </copyright>
 
-namespace GooglePlayGames
-{
-    using UnityEngine;
-    using UnityEditor;
-    using System.IO;
+#if UNITY_ANDROID
 
+namespace GooglePlayGames.Editor
+{
+    using System.IO;
+    using UnityEditor;
+    using UnityEngine;
+
+    /// <summary>
+    /// GPGS upgrader handles performing and upgrade tasks.
+    /// </summary>
     [InitializeOnLoad]
     public class GPGSUpgrader
     {
+        /// <summary>
+        /// Initializes static members of the <see cref="GooglePlayGames.GPGSUpgrader"/> class.
+        /// </summary>
         static GPGSUpgrader()
         {
-            string prevVer = GPGSProjectSettings.Instance.Get(GPGSUtil.LASTUPGRADEKEY, "00000");
-            if (prevVer != PluginVersion.VersionKey)
-            {
-                // if this is a really old version, upgrade to 911 first, then 915
-                if (prevVer != PluginVersion.VersionKeyCPP)
-                {
-                    prevVer = Upgrade911(prevVer);
-                }
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+                return;
+            Debug.Log("GPGSUpgrader start");
 
-                prevVer = Upgrade915(prevVer);
-
-                // there is no migration needed to 920+
-                Debug.Log("Upgrading from format version " + prevVer + " to " + PluginVersion.VersionKey);
-                prevVer = PluginVersion.VersionKey;
-                string msg = GPGSStrings.PostInstall.Text.Replace("$VERSION",
-                                 PluginVersion.VersionString);
-                EditorUtility.DisplayDialog(GPGSStrings.PostInstall.Title, msg, "OK");
-
-            }
-
-            GPGSProjectSettings.Instance.Set(GPGSUtil.LASTUPGRADEKEY, prevVer);
+            GPGSProjectSettings.Instance.Set(GPGSUtil.LASTUPGRADEKEY, PluginVersion.VersionKey);
+            GPGSProjectSettings.Instance.Set(GPGSUtil.PLUGINVERSIONKEY,
+                PluginVersion.VersionString);
             GPGSProjectSettings.Instance.Save();
-            AssetDatabase.Refresh();
-        }
 
-        private static string Upgrade915(string prevVer)
-        {
-            Debug.Log("Upgrading from format version " + prevVer + " to " + PluginVersion.VersionKeyU5);
-
-            // all that was done was moving the Editor files to be in GooglePlayGames/Editor
-            string[] obsoleteFiles =
-                {
-                    "Assets/Editor/GPGSAndroidSetupUI.cs",
-                    "Assets/Editor/GPGSAndroidSetupUI.cs.meta",
-                    "Assets/Editor/GPGSDocsUI.cs",
-                    "Assets/Editor/GPGSDocsUI.cs.meta",
-                    "Assets/Editor/GPGSIOSSetupUI.cs",
-                    "Assets/Editor/GPGSIOSSetupUI.cs.meta",
-                    "Assets/Editor/GPGSInstructionWindow.cs",
-                    "Assets/Editor/GPGSInstructionWindow.cs.meta",
-                    "Assets/Editor/GPGSPostBuild.cs",
-                    "Assets/Editor/GPGSPostBuild.cs.meta",
-                    "Assets/Editor/GPGSProjectSettings.cs",
-                    "Assets/Editor/GPGSProjectSettings.cs.meta",
-                    "Assets/Editor/GPGSStrings.cs",
-                    "Assets/Editor/GPGSStrings.cs.meta",
-                    "Assets/Editor/GPGSUpgrader.cs",
-                    "Assets/Editor/GPGSUpgrader.cs.meta",
-                    "Assets/Editor/GPGSUtil.cs",
-                    "Assets/Editor/GPGSUtil.cs.meta",
-                    "Assets/Editor/GameInfo.template",
-                    "Assets/Editor/GameInfo.template.meta",
-                    "Assets/Editor/PlistBuddyHelper.cs",
-                    "Assets/Editor/PlistBuddyHelper.cs.meta",
-                    "Assets/Editor/PostprocessBuildPlayer",
-                    "Assets/Editor/PostprocessBuildPlayer.meta",
-                    "Assets/Editor/ios_instructions",
-                    "Assets/Editor/ios_instructions.meta",
-                    "Assets/Editor/projsettings.txt",
-                    "Assets/Editor/projsettings.txt.meta",
-                    "Assets/Editor/template-AndroidManifest.txt",
-                    "Assets/Editor/template-AndroidManifest.txt.meta",
-                    "Assets/Plugins/Android/libs/armeabi/libgpg.so",
-                    "Assets/Plugins/Android/libs/armeabi/libgpg.so.meta",
-                    "Assets/Plugins/iOS/GPGSAppController 1.h",
-                    "Assets/Plugins/iOS/GPGSAppController 1.h.meta",
-                    "Assets/Plugins/iOS/GPGSAppController 1.mm",
-                    "Assets/Plugins/iOS/GPGSAppController 1.mm.meta"
-                };
-
-            foreach (string file in obsoleteFiles)
+            bool isChanged = false;
+            // Check that there is a AndroidManifest.xml file
+            if (!GPGSUtil.AndroidManifestExists())
             {
-                if (File.Exists(file))
-                {
-                    Debug.Log("Deleting obsolete file: " + file);
-                    File.Delete(file);
-                }
+                isChanged = true;
+                GPGSUtil.GenerateAndroidManifest();
             }
 
-            return PluginVersion.VersionKeyU5;
-        }
-
-        private static string Upgrade911(string prevVer)
-        {
-            Debug.Log("Upgrading from format version " + prevVer + " to " + PluginVersion.VersionKeyCPP);
-
-            // delete obsolete files, if they are there
-            string[] obsoleteFiles =
-                {
-                    "Assets/GooglePlayGames/OurUtils/Utils.cs",
-                    "Assets/GooglePlayGames/OurUtils/Utils.cs.meta",
-                    "Assets/GooglePlayGames/OurUtils/MyClass.cs",
-                    "Assets/GooglePlayGames/OurUtils/MyClass.cs.meta",
-                    "Assets/Plugins/GPGSUtils.dll",
-                    "Assets/Plugins/GPGSUtils.dll.meta",
-                };
-
-            foreach (string file in obsoleteFiles)
+            if (isChanged)
             {
-                if (File.Exists(file))
-                {
-                    Debug.Log("Deleting obsolete file: " + file);
-                    File.Delete(file);
-                }
+                AssetDatabase.Refresh();
             }
-
-            // delete obsolete directories, if they are there
-            string[] obsoleteDirectories =
-                {
-                "Assets/Plugins/Android/BaseGameUtils"
-            };
-
-            foreach (string directory in obsoleteDirectories)
-            {
-                if (Directory.Exists(directory))
-                {
-                    Debug.Log("Deleting obsolete directory: " + directory);
-                    Directory.Delete(directory, true);
-                }
-            }
-
-            Debug.Log("Done upgrading from format version " + prevVer + " to " + PluginVersion.VersionKeyCPP);
-            return PluginVersion.VersionKeyCPP;
+            Debug.Log("GPGSUpgrader done");
         }
     }
 }
+#endif

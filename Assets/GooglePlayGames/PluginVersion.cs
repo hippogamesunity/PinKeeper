@@ -16,16 +16,11 @@
 
 namespace GooglePlayGames
 {
-  public class PluginVersion
-  {
-    // older versions, used when upgrading to other versions
-    public const string VersionKeyCPP = "00911";
-    public const string VersionKeyU5 = "00915";
-    public const int VersionInt = 0x0925;
-    public const string VersionString = "0.9.25";
-    public const string VersionKey = "00925";
-
-    // used to check for the correct min version or play services.
-    public const int MinGmsCoreVersionCode = 7571000;
-  }
+    public class PluginVersion
+    {
+        // Current Version.
+        public const int VersionInt = 0x01014;
+        public const string VersionString = "0.10.14";
+        public const string VersionKey = "01014" ;
+    }
 }

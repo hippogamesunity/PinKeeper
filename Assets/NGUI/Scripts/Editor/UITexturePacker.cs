@@ -57,7 +57,7 @@ public class UITexturePacker
 		public bool paddingY;
 	}
 
-	public static Rect[] PackTextures (Texture2D texture, Texture2D[] textures, int width, int height, int padding, int maxSize)
+	static public Rect[] PackTextures (Texture2D texture, Texture2D[] textures, int width, int height, int padding, int maxSize)
 	{
 		if (width > maxSize && height > maxSize) return null;
 		if (width > maxSize || height > maxSize) { int temp = width; width = height; height = temp; }
@@ -107,7 +107,7 @@ public class UITexturePacker
 			storage[i].paddingY = (yPadding != 0);
 		}
 
-		texture.Resize(width, height);
+        texture.Reinitialize(width, height);
 		texture.SetPixels(new Color[width * height]);
 
 		// The returned rects

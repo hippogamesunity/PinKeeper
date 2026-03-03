@@ -13,6 +13,9 @@ namespace Assets.Scripts
 
         public void Start()
         {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
+
             DetectLanguage();
             
             #if UNITY_IPHONE

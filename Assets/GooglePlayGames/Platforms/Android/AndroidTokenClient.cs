@@ -1,4 +1,4 @@
-﻿// <copyright file="AndroidTokenClient.cs" company="Google Inc.">
+// <copyright file="AndroidTokenClient.cs" company="Google Inc.">
 // Copyright (C) 2015 Google Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,146 +15,278 @@
 // </copyright>
 
 #if UNITY_ANDROID
-namespace GooglePlayGames.Android {
-using System;
-using System.Linq;
-using GooglePlayGames.BasicApi;
-using GooglePlayGames.Native; // Token retrieval
-using GooglePlayGames.Native.PInvoke;
-using GooglePlayGames.OurUtils;
-using System.Runtime.InteropServices;
-using System.Reflection;
-using System.Collections.Generic;
-using UnityEngine;
-
-using C = GooglePlayGames.Native.Cwrapper.InternalHooks;
-internal class AndroidTokenClient: TokenClient
+namespace GooglePlayGames.Android
 {
-        public static AndroidJavaObject GetActivity()
+    using System;
+    using System.Linq;
+    using BasicApi;
+    using OurUtils;
+    using UnityEngine;
+    using System.Collections.Generic;
+
+    internal class AndroidTokenClient : TokenClient
+    {
+        private const string HelperFragmentClass = "com.google.games.bridge.HelperFragment";
+
+        // These are the configuration values.
+        private bool requestEmail;
+        private bool requestAuthCode;
+        private bool requestIdToken;
+        private List<string> oauthScopes;
+        private string webClientId;
+        private bool forceRefresh;
+        private bool hidePopups;
+        private string accountName;
+
+        // These are the results
+        private AndroidJavaObject account;
+        private string email;
+        private string authCode;
+        private string idToken;
+
+        public void SetRequestAuthCode(bool flag, bool forceRefresh)
         {
-            using (var jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-            {
-                return jc.GetStatic<AndroidJavaObject>("currentActivity");
-            }
+            requestAuthCode = flag;
+            this.forceRefresh = forceRefresh;
         }
 
-
-        /// <summary>Gets the Google API client Java object.</summary>
-        /// <returns>The API client associated with the current Unity app.</returns>
-        /// <param name="serverClientID">The OAuth 2.0 client ID for a backend server.</param>
-        private AndroidJavaObject GetApiClient(bool getServerAuthCode = false,
-                                               string serverClientID = null)
+        public void SetRequestEmail(bool flag)
         {
-            Debug.Log("Calling GetApiClient....");
-            using (var currentActivity = GetActivity())
+            requestEmail = flag;
+        }
+
+        public void SetRequestIdToken(bool flag)
+        {
+            requestIdToken = flag;
+        }
+
+        public void SetWebClientId(string webClientId)
+        {
+            this.webClientId = webClientId;
+        }
+
+        public void SetHidePopups(bool flag)
+        {
+            this.hidePopups = flag;
+        }
+
+        public void SetAccountName(string accountName)
+        {
+            this.accountName = accountName;
+        }
+
+        public void AddOauthScopes(params string[] scopes)
+        {
+            if (scopes != null)
             {
-                using (AndroidJavaClass jc_plus = new AndroidJavaClass("com.google.android.gms.plus.Plus"))
+                if (oauthScopes == null)
                 {
-                    using (AndroidJavaObject jc_builder = new AndroidJavaObject("com.google.android.gms.common.api.GoogleApiClient$Builder",currentActivity))
-                    {
-                        jc_builder.Call<AndroidJavaObject> ("addApi", jc_plus.GetStatic<AndroidJavaObject>("API"));
-                        jc_builder.Call<AndroidJavaObject> ("addScope", jc_plus.GetStatic<AndroidJavaObject>("SCOPE_PLUS_LOGIN"));
-                        if (getServerAuthCode)
-                        {
-                            jc_builder.Call<AndroidJavaObject> ("requestServerAuthCode", serverClientID, jc_builder);
-                        }
-                        AndroidJavaObject client = jc_builder.Call<AndroidJavaObject> ("build");
-                        client.Call ("connect");
-
-                        // limit spinning to 100, to minimize blocking when not
-                        // working as expected.
-                        // TODO: Make this a callback.
-                        int ct = 100;
-                        while( ( !client.Call<bool>("isConnected") ) && (ct-- != 0) )
-                        {
-                            System.Threading.Thread.Sleep(100);
-                        }
-                        Debug.Log("Done GetApiClient is " + client);
-                        return client;
-                    }
+                    oauthScopes = new List<string>();
                 }
+
+                oauthScopes.AddRange(scopes);
             }
         }
 
-
-        /// <summary>
-        /// Gets the account name of the currently signed-in user to later use for token retrieval.
-        /// </summary>
-        /// <remarks>Currently only used internally to encourage using the unique player ID instead.</remarks>
-        /// <returns>The current user's Google account name.</returns>
-        private string GetAccountName()
+        public void Signout()
         {
-            string accountName;
-            using (AndroidJavaClass plusService = new AndroidJavaClass("com.google.android.gms.plus.Plus"))
+            account = null;
+            authCode = null;
+            email = null;
+            idToken = null;
+            PlayGamesHelperObject.RunOnGameThread(() =>
             {
-                using (AndroidJavaObject accountService = plusService.GetStatic<AndroidJavaObject>("AccountApi"))
-                {
-                    using (var apiClient = GetApiClient())
-                    {
-                        accountName  = accountService.Call<string>("getAccountName", apiClient);
-                    }
-                }
-            }
-            return accountName;
+                Debug.Log("Calling Signout in token client");
+                AndroidJavaClass cls = new AndroidJavaClass(HelperFragmentClass);
+                cls.CallStatic("signOut", AndroidHelperFragment.GetActivity());
+            });
         }
 
-
-        /// <summary>Gets the current user's email.</summary>
+        /// <summary>Gets the email selected by the current player.</summary>
+        /// <remarks>This is not necessarily the email address of the player.  It
+        /// is just the account selected by the player from a list of accounts
+        /// present on the device.
+        /// </remarks>
         /// <returns>A string representing the email.</returns>
         public string GetEmail()
         {
-            return GetAccountName();
+            return email;
         }
 
-
-        /// <summary>Gets the authZ token for server authorization.</summary>
-        /// <param name="serverClietnID">The client ID for the server that will exchange the one-time code.</param>
-        /// <returns> An authorization code upon success.</returns>
-        public string GetAuthorizationCode(string serverClientID)
+        public string GetAuthCode()
         {
-            throw new NotImplementedException();
+            return authCode;
         }
-
-
-        /// <summary>Gets the access token currently associated with the Unity activity.</summary>
-        /// <returns>The OAuth 2.0 access token.</returns>
-        public string GetAccessToken()
-        {
-            string token = null;
-            string accountName = GetAccountName() ?? "NULL";
-            string scope = "oauth2:https://www.googleapis.com/auth/plus.me";
-
-            using (var googleAuthUtil = new AndroidJavaClass("com.google.android.gms.auth.GoogleAuthUtil"))
-            {
-                token = googleAuthUtil.CallStatic<string>("getToken", GetActivity(), accountName, scope);
-            }
-
-            Debug.Log("Access Token " + token);
-            return token;
-        }
-
 
         /// <summary>Gets the OpenID Connect ID token for authentication with a server backend.</summary>
-        /// <returns>The OpenID Connect ID token.</returns>
-        /// <param name="serverClientID">Server client ID from console.developers.google.com or the Play Games
+        /// <param name="serverClientId">Server client ID from console.developers.google.com or the Play Games
         /// services console.</param>
-        public string GetIdToken(string serverClientID)
+        /// <param name="idTokenCallback"> A callback to be invoked after token is retrieved. Will be passed null value
+        /// on failure. </param>
+        public string GetIdToken()
         {
-            string token = null;
-            string accountName = GetAccountName() ?? "NULL";
-            string scope = "audience:server:client_id:" + serverClientID;
+            return idToken;
+        }
 
-            using (AndroidJavaClass unityActivity = new AndroidJavaClass("com.unity3d.player.UnityPlayer"),
-                   googleAuthUtil = new AndroidJavaClass("com.google.android.gms.auth.GoogleAuthUtil"))
+        public void FetchTokens(bool silent, Action<int> callback)
+        {
+            PlayGamesHelperObject.RunOnGameThread(() => DoFetchToken(silent, callback));
+        }
+
+        public void RequestPermissions(string[] scopes, Action<SignInStatus> callback)
+        {
+            using (var bridgeClass = new AndroidJavaClass(HelperFragmentClass))
+            using (var currentActivity = AndroidHelperFragment.GetActivity())
+            using (var task =
+                bridgeClass.CallStatic<AndroidJavaObject>("showRequestPermissionsUi", currentActivity,
+                    oauthScopes.Union(scopes).ToArray()))
             {
-                using(AndroidJavaObject currentActivity = unityActivity.GetStatic<AndroidJavaObject>("currentActivity"))
+                AndroidTaskUtils.AddOnSuccessListener<AndroidJavaObject>(task, /* disposeResult= */ false,
+                    accountWithNewScopes =>
+                    {
+                        if (accountWithNewScopes == null)
+                        {
+                            callback(SignInStatus.InternalError);
+                            return;
+                        }
+
+                        account = accountWithNewScopes;
+                        email = account.Call<string>("getEmail");
+                        idToken = account.Call<string>("getIdToken");
+                        authCode = account.Call<string>("getServerAuthCode");
+                        oauthScopes = oauthScopes.Union(scopes).ToList();
+                        callback(SignInStatus.Success);
+                    });
+
+                AndroidTaskUtils.AddOnFailureListener(task, e =>
                 {
-                    token = googleAuthUtil.CallStatic<string>("getToken", currentActivity, accountName, scope);
+                    if (!Misc.IsApiException(e)) {
+                        OurUtils.Logger.e("Exception requesting new permissions" +
+                            e.Call<string>("toString"));
+                        return;
+                    }
+
+                    var failCode = SignInHelper.ToSignInStatus(e.Call<int>("getStatusCode"));
+                    OurUtils.Logger.e("Exception requesting new permissions: " + failCode);
+                    callback(failCode);
+                });
+            }
+        }
+
+        /// <summary>Returns whether or not user has given permissions for given scopes.</summary>
+        /// <param name="scopes">array of scopes</param>
+        /// <returns><c>true</c>, if given, <c>false</c> otherwise.</returns>
+        public bool HasPermissions(string[] scopes)
+        {
+            using (var bridgeClass = new AndroidJavaClass(HelperFragmentClass))
+            using (var currentActivity = AndroidHelperFragment.GetActivity())
+            {
+                return bridgeClass.CallStatic<bool>("hasPermissions", currentActivity, scopes);
+            }
+        }
+
+        private void DoFetchToken(bool silent, Action<int> callback)
+        {
+            try
+            {
+                using (var bridgeClass = new AndroidJavaClass(HelperFragmentClass))
+                using (var currentActivity = AndroidHelperFragment.GetActivity())
+                using (var pendingResult = bridgeClass.CallStatic<AndroidJavaObject>(
+                    "fetchToken",
+                    currentActivity,
+                    silent,
+                    requestAuthCode,
+                    requestEmail,
+                    requestIdToken,
+                    webClientId,
+                    forceRefresh,
+                    oauthScopes.ToArray(),
+                    hidePopups,
+                    accountName))
+                {
+                    pendingResult.Call("setResultCallback", new ResultCallbackProxy(
+                        tokenResult =>
+                        {
+                            account = tokenResult.Call<AndroidJavaObject>("getAccount");
+                            authCode = tokenResult.Call<string>("getAuthCode");
+                            email = tokenResult.Call<string>("getEmail");
+                            idToken = tokenResult.Call<string>("getIdToken");
+                            callback(tokenResult.Call<int>("getStatusCode"));
+                        }));
                 }
             }
+            catch (Exception e)
+            {
+                OurUtils.Logger.e("Exception launching token request: " + e.Message);
+                OurUtils.Logger.e(e.ToString());
+            }
+        }
 
-            Debug.Log("ID Token " + token);
-            return token;
+        public AndroidJavaObject GetAccount()
+        {
+            return account;
+        }
+
+        /// <summary>
+        /// Gets another server auth code.
+        /// </summary>
+        /// <remarks>This method should be called after authenticating, and exchanging
+        /// the initial server auth code for a token.  This is implemented by signing in
+        /// silently, which if successful returns almost immediately and with a new
+        /// server auth code.
+        /// </remarks>
+        /// <param name="reAuthenticateIfNeeded">Calls Authenticate if needed when
+        /// retrieving another auth code. </param>
+        /// <param name="callback">Callback.</param>
+        public void GetAnotherServerAuthCode(bool reAuthenticateIfNeeded, Action<string> callback)
+        {
+            PlayGamesHelperObject.RunOnGameThread(() => DoGetAnotherServerAuthCode(reAuthenticateIfNeeded, callback));
+        }
+
+        private void DoGetAnotherServerAuthCode(bool reAuthenticateIfNeeded, Action<string> callback)
+        {
+            try
+            {
+                using (var bridgeClass = new AndroidJavaClass(HelperFragmentClass))
+                using (var currentActivity = AndroidHelperFragment.GetActivity())
+                using (var pendingResult = bridgeClass.CallStatic<AndroidJavaObject>(
+                    "fetchToken",
+                    currentActivity,
+                    /* silent= */ reAuthenticateIfNeeded,
+                    /* requestAuthCode= */ true,
+                    /* requestEmail= */ false,
+                    /* requestIdToken= */ false,
+                    webClientId,
+                    /* forceRefresh= */ false,
+                    oauthScopes.ToArray(),
+                    /* hidePopups= */ true,
+                    /* accountName= */ ""))
+                {
+                    pendingResult.Call("setResultCallback", new ResultCallbackProxy(
+                        tokenResult => { callback(tokenResult.Call<string>("getAuthCode")); }));
+                }
+            }
+            catch (Exception e)
+            {
+                OurUtils.Logger.e("Exception launching token request: " + e.Message);
+                OurUtils.Logger.e(e.ToString());
+            }
+        }
+
+        private class ResultCallbackProxy : AndroidJavaProxy
+        {
+            private Action<AndroidJavaObject> mCallback;
+
+            public ResultCallbackProxy(Action<AndroidJavaObject> callback)
+                : base("com/google/android/gms/common/api/ResultCallback")
+            {
+                mCallback = callback;
+            }
+
+            public void onResult(AndroidJavaObject tokenResult)
+            {
+                mCallback(tokenResult);
+            }
         }
     }
 }

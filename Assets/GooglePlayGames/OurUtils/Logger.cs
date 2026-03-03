@@ -25,37 +25,26 @@ namespace GooglePlayGames.OurUtils
 
         public static bool DebugLogEnabled
         {
-            get
-            {
-                return debugLogEnabled;
-            }
+            get { return debugLogEnabled; }
 
-            set
-            {
-                debugLogEnabled = value;
-            }
+            set { debugLogEnabled = value; }
         }
 
         private static bool warningLogEnabled = true;
 
         public static bool WarningLogEnabled
         {
-            get
-            {
-                return warningLogEnabled;
-            }
+            get { return warningLogEnabled; }
 
-            set
-            {
-                warningLogEnabled = value;
-            }
+            set { warningLogEnabled = value; }
         }
 
         public static void d(string msg)
         {
             if (debugLogEnabled)
             {
-                Debug.Log(ToLogMessage(string.Empty, "DEBUG", msg));
+                PlayGamesHelperObject.RunOnGameThread(() =>
+                    Debug.Log(ToLogMessage(string.Empty, "DEBUG", msg)));
             }
         }
 
@@ -63,7 +52,8 @@ namespace GooglePlayGames.OurUtils
         {
             if (warningLogEnabled)
             {
-                Debug.LogWarning(ToLogMessage("!!!", "WARNING", msg));
+                PlayGamesHelperObject.RunOnGameThread(() =>
+                    Debug.LogWarning(ToLogMessage("!!!", "WARNING", msg)));
             }
         }
 
@@ -71,7 +61,8 @@ namespace GooglePlayGames.OurUtils
         {
             if (warningLogEnabled)
             {
-                Debug.LogWarning(ToLogMessage("***", "ERROR", msg));
+                PlayGamesHelperObject.RunOnGameThread(() =>
+                    Debug.LogWarning(ToLogMessage("***", "ERROR", msg)));
             }
         }
 
@@ -82,8 +73,20 @@ namespace GooglePlayGames.OurUtils
 
         private static string ToLogMessage(string prefix, string logType, string msg)
         {
-            return string.Format("{0} [Play Games Plugin DLL] {1} {2}: {3}",
-                prefix, DateTime.Now.ToString("MM/dd/yy H:mm:ss zzz"), logType, msg);
+            string timeString = null;
+            try
+            {
+                timeString = DateTime.Now.ToString("MM/dd/yy H:mm:ss zzz");
+            }
+            catch (Exception)
+            {
+                PlayGamesHelperObject.RunOnGameThread(() =>
+                    Debug.LogWarning("*** [Play Games Plugin " + PluginVersion.VersionString + "] ERROR: Failed to format DateTime.Now"));
+                timeString = string.Empty;
+            }
+
+            return string.Format("{0} [Play Games Plugin " + PluginVersion.VersionString+ "] {1} {2}: {3}",
+                prefix, timeString, logType, msg);
         }
     }
 }

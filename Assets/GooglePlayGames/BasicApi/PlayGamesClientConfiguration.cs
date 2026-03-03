@@ -1,4 +1,4 @@
-﻿// <copyright file="PlayGamesClientConfiguration.cs" company="Google Inc.">
+// <copyright file="PlayGamesClientConfiguration.cs" company="Google Inc.">
 // Copyright (C) 2014 Google Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,10 +14,13 @@
 //    limitations under the License.
 // </copyright>
 
+#if UNITY_ANDROID
+
 namespace GooglePlayGames.BasicApi
 {
-    using GooglePlayGames.BasicApi.Multiplayer;
     using GooglePlayGames.OurUtils;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Provides configuration for <see cref="PlayGamesPlatform"/>. If you wish to use either Saved
@@ -27,67 +30,191 @@ namespace GooglePlayGames.BasicApi
     /// </summary>
     public struct PlayGamesClientConfiguration
     {
+        /// <summary>
+        /// The default configuration.
+        /// </summary>
         public static readonly PlayGamesClientConfiguration DefaultConfiguration =
-            new Builder().Build();
+            new Builder()
+                .Build();
 
+        /// <summary>
+        /// Flag indicating to enable saved games API.
+        /// </summary>
         private readonly bool mEnableSavedGames;
-        private readonly bool mEnableDeprecatedCloudSave;
-        private readonly InvitationReceivedDelegate mInvitationDelegate;
-        private readonly MatchDelegate mMatchDelegate;
 
+        /// <summary>
+        /// Array of scopes to be requested from user. None is considered as 'games_lite'.
+        /// </summary>
+        private readonly string[] mScopes;
+
+        /// <summary>
+        /// The flag to indicate a server auth code should be requested when authenticating.
+        /// </summary>
+        private readonly bool mRequestAuthCode;
+
+        /// <summary>
+        /// The flag indicating the auth code should be refresh, causing re-consent and issuing a new refresh token.
+        /// </summary>
+        private readonly bool mForceRefresh;
+
+        /// <summary>
+        /// The flag indicating popup UIs should be hidden.
+        /// </summary>
+        private readonly bool mHidePopups;
+
+        /// <summary>
+        /// The flag indicating the email address should returned when authenticating.
+        /// </summary>
+        private readonly bool mRequestEmail;
+
+        /// <summary>
+        /// The flag indicating the id token should be returned when authenticating.
+        /// </summary>
+        private readonly bool mRequestIdToken;
+
+        /// <summary>
+        /// The account name to attempt to use when signing in.  Null indicates use the default.
+        /// </summary>
+        private readonly string mAccountName;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GooglePlayGames.BasicApi.PlayGamesClientConfiguration"/> struct.
+        /// </summary>
+        /// <param name="builder">Builder for this configuration.</param>
         private PlayGamesClientConfiguration(Builder builder)
         {
             this.mEnableSavedGames = builder.HasEnableSaveGames();
-            this.mEnableDeprecatedCloudSave = builder.HasEnableDeprecatedCloudSave();
-            this.mInvitationDelegate = builder.GetInvitationDelegate();
-            this.mMatchDelegate = builder.GetMatchDelegate();
+            this.mScopes = builder.getScopes();
+            this.mHidePopups = builder.IsHidingPopups();
+            this.mRequestAuthCode = builder.IsRequestingAuthCode();
+            this.mForceRefresh = builder.IsForcingRefresh();
+            this.mRequestEmail = builder.IsRequestingEmail();
+            this.mRequestIdToken = builder.IsRequestingIdToken();
+            this.mAccountName = builder.GetAccountName();
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="GooglePlayGames.BasicApi.PlayGamesClientConfiguration"/>
+        /// enable saved games.
+        /// </summary>
+        /// <value><c>true</c> if enable saved games; otherwise, <c>false</c>.</value>
         public bool EnableSavedGames
         {
-            get
-            {
-                return mEnableSavedGames;
-            }
+            get { return mEnableSavedGames; }
         }
 
-        public bool EnableDeprecatedCloudSave
+        public bool IsHidingPopups
         {
-            get
-            {
-                return mEnableDeprecatedCloudSave;
-            }
+            get { return mHidePopups; }
         }
 
-        public InvitationReceivedDelegate InvitationDelegate
+        public bool IsRequestingAuthCode
         {
-            get
-            {
-                return mInvitationDelegate;
-            }
+            get { return mRequestAuthCode; }
         }
 
-        public MatchDelegate MatchDelegate
+        public bool IsForcingRefresh
         {
-            get
-            {
-                return mMatchDelegate;
-            }
+            get { return mForceRefresh; }
         }
 
+        public bool IsRequestingEmail
+        {
+            get { return mRequestEmail; }
+        }
+
+        public bool IsRequestingIdToken
+        {
+            get { return mRequestIdToken; }
+        }
+
+        public string AccountName
+        {
+            get { return mAccountName; }
+        }
+
+        /// <summary>
+        /// Gets a array of scopes to be requested from the user.
+        /// </summary>
+        /// <value>String array of scopes.</value>
+        public string[] Scopes
+        {
+            get { return mScopes; }
+        }
+
+        public static bool operator ==(PlayGamesClientConfiguration c1, PlayGamesClientConfiguration c2)
+        {
+            if (c1.EnableSavedGames != c2.EnableSavedGames ||
+                c1.IsForcingRefresh != c2.IsForcingRefresh ||
+                c1.IsHidingPopups != c2.IsHidingPopups ||
+                c1.IsRequestingEmail != c2.IsRequestingEmail ||
+                c1.IsRequestingAuthCode != c2.IsRequestingAuthCode ||
+                !c1.Scopes.SequenceEqual(c2.Scopes) ||
+                c1.AccountName != c2.AccountName)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool operator !=(PlayGamesClientConfiguration c1, PlayGamesClientConfiguration c2)
+        {
+            return !(c1 == c2);
+        }
+
+        /// <summary>
+        /// Builder class for the configuration.
+        /// </summary>
         public class Builder
         {
+            /// <summary>
+            /// The flag to enable save games. Default is false.
+            /// </summary>
             private bool mEnableSaveGames = false;
-            private bool mEnableDeprecatedCloudSave = false;
 
-            private InvitationReceivedDelegate mInvitationDelegate = delegate
-            {
-            };
-            
-            private MatchDelegate mMatchDelegate = delegate
-            {
-            };
+            /// <summary>
+            /// The scopes to request from the user. Default is none.
+            /// </summary>
+            private List<string> mScopes = null;
 
+            /// <summary>
+            /// The flag indicating that popup UI should be hidden.
+            /// </summary>
+            private bool mHidePopups = false;
+
+            /// <summary>
+            /// The flag to indicate a server auth code should be requested when authenticating.
+            /// </summary>
+            private bool mRequestAuthCode = false;
+
+            /// <summary>
+            /// The flag indicating the auth code should be refresh, causing re-consent and issuing a new refresh token.
+            /// </summary>
+            private bool mForceRefresh = false;
+
+            /// <summary>
+            /// The flag indicating the email address should returned when authenticating.
+            /// </summary>
+            private bool mRequestEmail = false;
+
+            /// <summary>
+            /// The flag indicating the id token should be returned when authenticating.
+            /// </summary>
+            private bool mRequestIdToken = false;
+
+            /// <summary>
+            /// The account name to use as a default when authenticating.
+            /// </summary>
+            /// <remarks>
+            /// This is only used when requesting auth code or id token.
+            /// </remarks>
+            private string mAccountName = null;
+
+            /// <summary>
+            /// Enables the saved games.
+            /// </summary>
+            /// <returns>The builder.</returns>
             public Builder EnableSavedGames()
             {
                 mEnableSaveGames = true;
@@ -95,55 +222,136 @@ namespace GooglePlayGames.BasicApi
             }
 
             /// <summary>
-            /// Enables the now-deprecated cloud save. This is only present for backwards-compatibility 
-            /// and legacy purposes. New games cannot have cloud save enabled, and must use Saved Games.
-            /// Existing games should migrate off of cloud save as soon as possible.
+            /// Enables hiding popups.  This is recommended for VR apps.
             /// </summary>
-            /// <returns>The builder instance</returns>
-            public Builder EnableDeprecatedCloudSave()
+            /// <returns>The hide popups.</returns>
+            public Builder EnableHidePopups()
             {
-                Logger.w("Cloud save is deprecated and is not available for new games. " +
-                    "Please migrate to Saved Games as soon as possible.");
-                mEnableDeprecatedCloudSave = true;
+                mHidePopups = true;
                 return this;
             }
 
-            public Builder WithInvitationDelegate(InvitationReceivedDelegate invitationDelegate)
+            public Builder RequestServerAuthCode(bool forceRefresh)
             {
-                this.mInvitationDelegate = Misc.CheckNotNull(invitationDelegate);
+                mRequestAuthCode = true;
+                mForceRefresh = forceRefresh;
                 return this;
             }
 
-            public Builder WithMatchDelegate(MatchDelegate matchDelegate)
+            public Builder RequestEmail()
             {
-                this.mMatchDelegate = Misc.CheckNotNull(matchDelegate);
+                mRequestEmail = true;
                 return this;
             }
 
+            public Builder RequestIdToken()
+            {
+                mRequestIdToken = true;
+                return this;
+            }
+
+            public Builder SetAccountName(string accountName)
+            {
+                mAccountName = accountName;
+                return this;
+            }
+
+            /// <summary>
+            /// Requests an Oauth scope from the user.
+            /// </summary>
+            /// <remarks>
+            /// Not setting one will default to 'games_lite' and will not show a consent
+            /// dialog to the user. Valid examples are 'profile' and 'email'.
+            /// Full list: https://developers.google.com/identity/protocols/googlescopes
+            /// To exchange the auth code with an id_token (or user id) on your server,
+            /// you must add at least one scope.
+            /// </remarks>
+            /// <returns>The builder.</returns>
+            public Builder AddOauthScope(string scope)
+            {
+                if (mScopes == null) mScopes = new List<string>();
+                mScopes.Add(scope);
+                return this;
+            }
+
+            /// <summary>
+            /// Build this instance.
+            /// </summary>
+            /// <returns>the client configuration instance</returns>
+            public PlayGamesClientConfiguration Build()
+            {
+                return new PlayGamesClientConfiguration(this);
+            }
+
+            /// <summary>
+            /// Determines whether this instance has enable save games.
+            /// </summary>
+            /// <returns><c>true</c> if this instance has enable save games; otherwise, <c>false</c>.</returns>
             internal bool HasEnableSaveGames()
             {
                 return mEnableSaveGames;
             }
 
-            internal bool HasEnableDeprecatedCloudSave()
+            internal bool IsRequestingAuthCode()
             {
-                return mEnableDeprecatedCloudSave;
+                return mRequestAuthCode;
             }
 
-            internal MatchDelegate GetMatchDelegate()
+            internal bool IsHidingPopups()
             {
-                return mMatchDelegate;
+                return mHidePopups;
             }
 
-            internal InvitationReceivedDelegate GetInvitationDelegate()
+            internal bool IsForcingRefresh()
             {
-                return mInvitationDelegate;
+                return mForceRefresh;
             }
 
-            public PlayGamesClientConfiguration Build()
+            internal bool IsRequestingEmail()
             {
-                return new PlayGamesClientConfiguration(this);
+                return mRequestEmail;
             }
+
+            internal bool IsRequestingIdToken()
+            {
+                return mRequestIdToken;
+            }
+
+            internal string GetAccountName()
+            {
+                return mAccountName;
+            }
+
+            /// <summary>
+            /// Gets the Oauth scopes to be requested from the user.
+            /// </summary>
+            /// <returns>String array of scopes.</returns>
+            internal string[] getScopes()
+            {
+                return mScopes == null ? new string[0] : mScopes.ToArray();
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
+                hash = hash * 31 + EnableSavedGames.GetHashCode();
+                hash = hash * 31 + IsForcingRefresh.GetHashCode();
+                hash = hash * 31 + IsHidingPopups.GetHashCode();
+                hash = hash * 31 + IsRequestingEmail.GetHashCode();
+                hash = hash * 31 + IsRequestingAuthCode.GetHashCode();
+                hash = hash * 31 + Scopes.GetHashCode();
+                hash = hash * 31 + AccountName.GetHashCode();
+                return hash;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this == (PlayGamesClientConfiguration) obj;
         }
     }
 }
+#endif

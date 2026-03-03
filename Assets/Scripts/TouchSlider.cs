@@ -14,7 +14,7 @@ namespace Assets.Scripts
 
         public void Update()
         {
-            if (Input.GetMouseButtonDown(0) && collider.bounds.Contains(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+            if (Input.GetMouseButtonDown(0) && GetComponent<Collider>().bounds.Contains(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
             {
                 _position = Input.mousePosition;
                 _pressed = true;

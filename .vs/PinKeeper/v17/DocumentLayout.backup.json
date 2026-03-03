@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\GitHub\\PinKeeper\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|d:\\github\\pinkeeper\\assets\\scripts\\views\\storage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\views\\storage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|d:\\github\\pinkeeper\\assets\\scripts\\views\\cardview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\views\\cardview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|d:\\github\\pinkeeper\\assets\\scripts\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Storage.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\Storage.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Views\\Storage.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\Storage.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Views\\Storage.cs",
+              "ViewState": "AgIAAFkAAAAAAAAAAAAIwHMAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-02T21:10:57.475Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CardView.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\CardView.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Views\\CardView.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\CardView.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Views\\CardView.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-02T21:10:52.516Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Engine.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Engine.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Engine.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Engine.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Engine.cs",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAuwBAAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-02T21:08:19.406Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

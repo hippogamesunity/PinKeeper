@@ -14,7 +14,9 @@
 //    limitations under the License.
 // </copyright>
 
-namespace GooglePlayGames
+#if UNITY_ANDROID
+
+namespace GooglePlayGames.Editor
 {
     using UnityEngine;
     using UnityEditor;
@@ -24,11 +26,21 @@ namespace GooglePlayGames
         private string mNearbyServiceId = string.Empty;
 
         [MenuItem("Window/Google Play Games/Setup/Nearby Connections setup...", false, 3)]
-        public static void MenuItemFileGPGSAndroidSetup()
+        public static void MenuItemNearbySetup()
         {
             EditorWindow window = EditorWindow.GetWindow(
                 typeof(NearbyConnectionUI), true, GPGSStrings.NearbyConnections.Title);
             window.minSize = new Vector2(400, 200);
+        }
+
+        [MenuItem("Window/Google Play Games/Setup/Nearby Connections setup...", true)]
+        public static bool EnableNearbyMenuItem()
+        {
+#if UNITY_ANDROID
+            return true;
+#else
+            return false;
+#endif
         }
 
         public void OnEnable()
@@ -48,7 +60,7 @@ namespace GooglePlayGames
             GUILayout.Space(10);
             GUILayout.Label(GPGSStrings.Setup.NearbyServiceBlurb);
             mNearbyServiceId = EditorGUILayout.TextField(GPGSStrings.Setup.NearbyServiceId,
-                mNearbyServiceId,GUILayout.Width(350));
+                mNearbyServiceId, GUILayout.Width(350));
 
             GUILayout.FlexibleSpace();
             GUILayout.BeginHorizontal();
@@ -58,6 +70,7 @@ namespace GooglePlayGames
             {
                 DoSetup();
             }
+
             if (GUILayout.Button("Cancel", GUILayout.Width(100)))
             {
                 this.Close();
@@ -87,29 +100,54 @@ namespace GooglePlayGames
             // check for valid app id
             if (!GPGSUtil.LooksLikeValidServiceId(nearbyServiceId))
             {
-                GPGSUtil.Alert(GPGSStrings.Setup.ServiceIdError);
-                return false;
+                if (EditorUtility.DisplayDialog(
+                    "Remove Nearby connection permissions?  ",
+                    "The service Id is invalid.  It must follow package naming rules.  " +
+                    "Do you want to remove the AndroidManifest entries for Nearby connections?",
+                    "Yes",
+                    "No"))
+                {
+                    GPGSProjectSettings.Instance.Set(GPGSUtil.SERVICEIDKEY, null);
+                    GPGSProjectSettings.Instance.Save();
+                }
+                else
+                {
+                    return false;
+                }
             }
-
-            GPGSProjectSettings.Instance.Set(GPGSUtil.SERVICEIDKEY, nearbyServiceId);
-            GPGSProjectSettings.Instance.Save();
+            else
+            {
+                GPGSProjectSettings.Instance.Set(GPGSUtil.SERVICEIDKEY, nearbyServiceId);
+                GPGSProjectSettings.Instance.Save();
+            }
 
             if (androidBuild)
             {
                 // create needed directories
                 GPGSUtil.EnsureDirExists("Assets/Plugins");
                 GPGSUtil.EnsureDirExists("Assets/Plugins/Android");
-                GPGSUtil.CopySupportLibs();
 
                 // Generate AndroidManifest.xml
-                GPGSUtil.GenerateAndroidManifest(false);
+                GPGSUtil.GenerateAndroidManifest();
 
-                // refresh assets, and we're done
-                AssetDatabase.Refresh();
-                GPGSProjectSettings.Instance.Set("android.NearbySetupDone", true);
+                GPGSProjectSettings.Instance.Set(GPGSUtil.NEARBYSETUPDONEKEY, true);
                 GPGSProjectSettings.Instance.Save();
+
+                // Resolve the dependencies
+                Google.VersionHandler.VerboseLoggingEnabled = true;
+                Google.VersionHandler.UpdateVersionedAssets(forceUpdate: true);
+                Google.VersionHandler.Enabled = true;
+                AssetDatabase.Refresh();
+
+                Google.VersionHandler.InvokeStaticMethod(
+                    Google.VersionHandler.FindClass(
+                        "Google.JarResolver",
+                        "GooglePlayServices.PlayServicesResolver"),
+                    "MenuResolve", null);
             }
+
             return true;
         }
     }
 }
+#endif
