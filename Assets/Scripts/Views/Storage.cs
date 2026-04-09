@@ -39,7 +39,7 @@ namespace Assets.Scripts.Views
             for (var i = 1; i < Pages.Length; i++)
             {
                 Pages[i].GetComponent<UIPanel>().alpha = 0;
-                Pages[i].transform.localPosition = new Vector2(1000 * Camera.main.aspect, 0);
+                Pages[i].transform.localPosition = new Vector2(ScreenManager.Instance.ScreenWidth, 0);
             }
 
             InitializeCards(cards);
@@ -109,8 +109,8 @@ namespace Assets.Scripts.Views
 
         public void InitializePremium(bool premium)
         {
-            PremiumButton.SetActive(false);
-            SyncButton.SetActive(false);
+            PremiumButton.SetActive(!premium);
+            SyncButton.SetActive(premium);
 
             //PremiumButton.SetActive(!premium);
             //SyncButton.SetActive(premium);
@@ -162,8 +162,8 @@ namespace Assets.Scripts.Views
             var side = page > _page ? 1 : -1;
             var animationCurve = TweenPanel.GetComponent<TweenPosition>().animationCurve;
 
-            Pages[page].transform.localPosition = new Vector2(side * 1000 * Camera.main.aspect, 0);
-            TweenPosition.Begin(Pages[_page], TweenPanel.DefaultTimeout, new Vector2(-side * 1000 * Camera.main.aspect, 0)).animationCurve = animationCurve;
+            Pages[page].transform.localPosition = new Vector2(side * ScreenManager.Instance.ScreenWidth, 0);
+            TweenPosition.Begin(Pages[_page], TweenPanel.DefaultTimeout, new Vector2(-side * ScreenManager.Instance.ScreenWidth, 0)).animationCurve = animationCurve;
             TweenPosition.Begin(Pages[page], TweenPanel.DefaultTimeout, Vector2.zero).animationCurve = animationCurve;
             TweenAlpha.Begin(Pages[_page], TweenPanel.DefaultTimeout / 2, 0);
             TweenAlpha.Begin(Pages[page], TweenPanel.DefaultTimeout, 1);

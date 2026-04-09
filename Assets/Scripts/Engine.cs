@@ -13,8 +13,12 @@ namespace Assets.Scripts
 
         public void Start()
         {
-            PlayerPrefs.DeleteAll();
-            PlayerPrefs.Save();
+            #if UNITY_EDITOR
+
+            //PlayerPrefs.DeleteAll();
+            //PlayerPrefs.Save();
+
+            #endif
 
             DetectLanguage();
             

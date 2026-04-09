@@ -66,7 +66,7 @@ namespace Assets.Scripts.Views
 
         private void CreateKey()
         {
-            var mouse = 500 * Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition) - Grid.transform.localPosition;
+            var mouse = ScreenManager.Instance.TargetHeight / 2 * Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition) - Grid.transform.localPosition;
 
             TaskScheduler.Kill(TaskId);
 
@@ -81,7 +81,7 @@ namespace Assets.Scripts.Views
 
         private void UpdateKey()
         {
-            var mouse = 500 * Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition) - Grid.transform.localPosition;
+            var mouse = ScreenManager.Instance.TargetHeight / 2 * Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition) - Grid.transform.localPosition;
 
             for (var i = 0; i < Digits.Count; i++)
             {
@@ -156,9 +156,12 @@ namespace Assets.Scripts.Views
             ClearPattern();
         }
 
+        public static ProtectedValue Pattern;
+
         protected override void Success(ProtectedValue pattern)
         {
             ClearPattern();
+            Pattern = pattern.Copy();
             base.Success(pattern);
         }
 

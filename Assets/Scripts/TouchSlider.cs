@@ -29,7 +29,7 @@ namespace Assets.Scripts
             {
                 var delta = _position.x - Input.mousePosition.x;
 
-                if (Math.Abs(delta) > 200 * Camera.main.aspect)
+                if (Math.Abs(delta) > ScreenManager.Instance.TargetHeight / 5)
                 {
                     Listener.SendMessage(delta > 0 ? ListenerMethodLeft : ListenerMethodRight);
                     _pressed = false;

@@ -1,8 +1,9 @@
-﻿using System;
-using System.Text;
-using Assets.Scripts.Common;
+﻿using Assets.Scripts.Common;
 using Assets.Scripts.Views;
+using GooglePlayGames;
 using GooglePlayGames.BasicApi.SavedGame;
+using System;
+using System.Text;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -101,6 +102,8 @@ namespace Assets.Scripts
                 WriteSyncMessage(_exception);
                 return;
             }
+
+            Profile.Instance.CreateToken(new ProtectedValue(PlayGamesPlatform.Instance.GetUserId()), PatternLock.Pattern.Copy());
 
             if (_reset)
             {

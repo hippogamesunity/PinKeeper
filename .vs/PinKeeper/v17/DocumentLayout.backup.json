@@ -3,16 +3,76 @@
   "WorkspaceRootPath": "D:\\GitHub\\PinKeeper\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|d:\\github\\pinkeeper\\assets\\scripts\\views\\storage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|d:\\github\\pinkeeper\\assets\\scripts\\planformdependedsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\planformdependedsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\GitHub\\PinKeeper\\Assets\\Plugins\\Android\\AndroidManifest.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Plugins\\Android\\AndroidManifest.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\profile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\profile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\views\\lockbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\views\\lockbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\cloud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\cloud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\common\\aes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\common\\aes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\views\\storage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\views\\storage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|d:\\github\\pinkeeper\\assets\\scripts\\views\\cardview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\common\\gamesservicesclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\common\\gamesservicesclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\views\\patternlock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\views\\patternlock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\common\\protectedvalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\common\\protectedvalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\common\\debugconsole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\common\\debugconsole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\touchslider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\touchslider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\screenmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\screenmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\common\\tweenpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\common\\tweenpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\ngui\\scripts\\internal\\nguidebug.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\ngui\\scripts\\internal\\nguidebug.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|D:\\GitHub\\PinKeeper\\assets\\scripts\\views\\cardview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\views\\cardview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|d:\\github\\pinkeeper\\assets\\scripts\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{744593DA-8AF6-B1FF-5EA7-F03E1EBE75E0}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\OpenIABClient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Common\\OpenIABClient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,19 +87,211 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Storage.cs",
-              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\Storage.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Views\\Storage.cs",
-              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\Storage.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Views\\Storage.cs",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAIwHMAAAAOAAAAAAAAAA==",
+              "Title": "PlanformDependedSettings.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\PlanformDependedSettings.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlanformDependedSettings.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\PlanformDependedSettings.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlanformDependedSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-02T21:10:57.475Z",
+              "WhenOpened": "2026-04-09T21:59:17.083Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "AndroidManifest.xml",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Plugins\\Android\\AndroidManifest.xml",
+              "RelativeDocumentMoniker": "Assets\\Plugins\\Android\\AndroidManifest.xml",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Plugins\\Android\\AndroidManifest.xml",
+              "RelativeToolTip": "Assets\\Plugins\\Android\\AndroidManifest.xml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2026-04-09T21:51:50.841Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AES.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\AES.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Common\\AES.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\AES.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Common\\AES.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAIwFUAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T16:51:20.276Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "DebugConsole.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\DebugConsole.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Common\\DebugConsole.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\DebugConsole.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Common\\DebugConsole.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAIwDkAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T16:28:43.583Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "TweenPanel.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\TweenPanel.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Common\\TweenPanel.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\TweenPanel.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Common\\TweenPanel.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAiwEQAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T15:57:30.449Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "NGUIDebug.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\NGUI\\Scripts\\Internal\\NGUIDebug.cs",
+              "RelativeDocumentMoniker": "Assets\\NGUI\\Scripts\\Internal\\NGUIDebug.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\NGUI\\Scripts\\Internal\\NGUIDebug.cs",
+              "RelativeToolTip": "Assets\\NGUI\\Scripts\\Internal\\NGUIDebug.cs",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAqwHwAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T15:52:16.67Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ScreenManager.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\ScreenManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ScreenManager.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\ScreenManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ScreenManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T15:24:16.082Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PatternLock.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\PatternLock.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Views\\PatternLock.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\PatternLock.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Views\\PatternLock.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKMAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T14:59:45.92Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "TouchSlider.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\TouchSlider.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\TouchSlider.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\TouchSlider.cs",
+              "RelativeToolTip": "Assets\\Scripts\\TouchSlider.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAiwB8AAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T14:59:23.752Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LockBase.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\LockBase.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Views\\LockBase.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\LockBase.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Views\\LockBase.cs",
+              "ViewState": "AgIAAKQAAAAAAAAAAAAlwLoAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T14:36:39.701Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Profile.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Profile.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Profile.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Profile.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Profile.cs",
+              "ViewState": "AgIAAHYAAAAAAAAAAAAYwLIAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T14:35:27.314Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "GamesServicesClient.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\GamesServicesClient.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Common\\GamesServicesClient.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\GamesServicesClient.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Common\\GamesServicesClient.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCUAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T14:34:52.647Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Cloud.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Cloud.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Cloud.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Cloud.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Cloud.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAmwGkAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T14:34:33.303Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Storage.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\Storage.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Views\\Storage.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\Storage.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Views\\Storage.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwCMAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-02T21:10:57.475Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "OpenIABClient.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\OpenIABClient.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Common\\OpenIABClient.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\OpenIABClient.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Common\\OpenIABClient.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T14:40:46.97Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Engine.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Engine.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Engine.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Engine.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Engine.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAABIAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-02T21:08:19.406Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ProtectedValue.cs",
+              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\ProtectedValue.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Common\\ProtectedValue.cs",
+              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Common\\ProtectedValue.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Common\\ProtectedValue.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T16:44:23.244Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
               "Title": "CardView.cs",
               "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Views\\CardView.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Views\\CardView.cs",
@@ -47,21 +299,7 @@
               "RelativeToolTip": "Assets\\Scripts\\Views\\CardView.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-02T21:10:52.516Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Engine.cs",
-              "DocumentMoniker": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Engine.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Engine.cs",
-              "ToolTip": "D:\\GitHub\\PinKeeper\\Assets\\Scripts\\Engine.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Engine.cs",
-              "ViewState": "AgIAAGUAAAAAAAAAAAAuwBAAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-02T21:08:19.406Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-02T21:10:52.516Z"
             }
           ]
         }

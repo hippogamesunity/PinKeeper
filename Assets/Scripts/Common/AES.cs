@@ -81,6 +81,8 @@ namespace Assets.Scripts.Common
 
         public static string Decrypt(string value, string password)
         {
+            Debug.Log($"Decrypt={value.Substring(0, 10)}, password={password}");
+
             var cipherTextBytes = Convert.FromBase64String(value);
             var keyBytes = new Rfc2898DeriveBytes(password, Encoding.UTF8.GetBytes(SaltKey)).GetBytes(KeyLength / 8);
             var symmetricKey = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.None };

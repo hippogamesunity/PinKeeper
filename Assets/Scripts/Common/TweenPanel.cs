@@ -1,5 +1,6 @@
-﻿using System;
+﻿using Assets.Scripts;
 using Assets.Scripts.Common;
+using System;
 using UnityEngine;
 
 public class TweenPanel : MonoBehaviour
@@ -65,7 +66,7 @@ public class TweenPanel : MonoBehaviour
             }
             else
             {
-                vector = GetVector(tweenDirection, 1000 * Camera.main.aspect);
+                vector = GetVector(tweenDirection, ScreenManager.Instance.ScreenWidth);
             }
         }
 

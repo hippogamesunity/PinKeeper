@@ -27,10 +27,7 @@ namespace Assets.Scripts
             AES.Initialize();
         }
 
-        public static Profile Instance
-        {
-            get { return _instance ?? (_instance = Load()); }
-        }
+        public static Profile Instance => _instance ??= Load();
 
         #region Save / Load
 
@@ -173,6 +170,17 @@ namespace Assets.Scripts
                 _ptoken = _ptokenHash = null;
             }
 
+            // Purchasing based on OpenIABClient is obsolete, so all new profiles will be Premium. Need to replace OpenIABClient by Unity IAP later.
+
+            if (_ptoken == null)
+            {
+                var ptoken = Guid.NewGuid().ToString("N");
+
+                CreateToken(new ProtectedValue(ptoken), pattern);
+            }
+
+            //
+
             Save();
         }
 
@@ -274,12 +282,30 @@ namespace Assets.Scripts
 
         public List<PartialCardData> GetCards(ProtectedValue pattern)
         {
-            return Instance._cards.Where(i => i.Data != null).Select(i => GetCard(i.Slot, pattern)).Cast<PartialCardData>().ToList();
+            Debug.Log($"{_cards.Count} cards found.");
+
+            var cards = new List<PartialCardData>();
+
+            foreach (var _card in _cards.Where(i => i.Data != null))
+            {
+                try
+                {
+                    var card = (PartialCardData) GetCard(_card.Slot, pattern);
+
+                    cards.Add(card);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e.Message);
+                }
+            }
+
+            return cards;
         }
 
         public int CountCards()
         {
-            return Instance._cards.Count;
+            return _cards.Count;
         }
 
         public bool ReadyForSave
@@ -303,13 +329,17 @@ namespace Assets.Scripts
 
         public void CreateToken(ProtectedValue ptoken, ProtectedValue pattern)
         {
-            _ptoken = AES.Encrypt(ptoken, pattern);
-            _ptokenHash = Md5.Encode(ptoken);
+            if (_ptoken != null && AES.Decrypt(_ptoken, pattern) == ptoken) return;
 
+            var key = _ptoken == null ? pattern : AES.Decrypt(_ptoken, pattern);
+            
             foreach (var card in _cards.Where(c => c.Data != null))
             {
-                card.Data = Recrypt(card.Data, pattern, ptoken);
+                card.Data = Recrypt(card.Data, key, ptoken);
             }
+
+            _ptoken = AES.Encrypt(ptoken, pattern);
+            _ptokenHash = Md5.Encode(ptoken);
 
             Save();
         }
@@ -321,6 +351,8 @@ namespace Assets.Scripts
 
         private static ProtectedValue Recrypt(ProtectedValue value, ProtectedValue pattern, ProtectedValue newPattern)
         {
+            Debug.Log($"Recrypt={pattern.String}>{newPattern.String}");
+
             return new ProtectedValue(AES.Encrypt(AES.Decrypt(value.String, pattern.String), newPattern.String));
         }
 
@@ -328,10 +360,7 @@ namespace Assets.Scripts
 
         #region Sync
 
-        public bool Premium
-        {
-            get { return _ptoken != null; }
-        }
+        public bool Premium => _ptoken != null;
 
         public void SaveSyncTime()
         {
